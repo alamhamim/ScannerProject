@@ -12,22 +12,19 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.opera.OperaDriver;
 
 public class MainClass {
+//	Major changes
 
     static Scanner scan;
-    static BrowserClass browserClass;
     static WebDriver driver;
 
         public static void main(String[] args) throws IOException {
         scan = new Scanner(System.in);
-        browserClass = new BrowserClass();
         System.out.println("Please Enter A Browser Name: ");
-        browserClass.chooseBrowser(scan.next());
+        BrowserClass.chooseBrowser(scan.next());
         System.out.println("Please choose a for BESTBUY and choose b for TARGET then press ENTER!!!");
-        browserClass.chooseWebsite();
-        
-        
-        
-       
+        BrowserClass.chooseWebsite();
+        System.out.println("Please choose [Y/N] to done testing.");
+        BrowserClass.closeBrowser(scan.next());
         
         
     }
@@ -37,9 +34,10 @@ public class MainClass {
 
 class BrowserClass{
 
-    WebDriver driver;
+//	Driver changed to "static"
+   static WebDriver driver;
 
-    public void chooseBrowser(String browserName) throws IOException {
+    public static void chooseBrowser(String browserName) throws IOException {
         // To read the properties file
         FileInputStream file = new FileInputStream("drivers\\browserData\\browserData.properties");
         Properties properties = new Properties();
@@ -73,7 +71,7 @@ class BrowserClass{
         
     }
 
-    public String chooseWebsite() throws IOException  {
+    public static String chooseWebsite() throws IOException  {
         FileInputStream file = new FileInputStream("WebsiteName\\websiteData.properties");
         Properties properties = new Properties();
         properties.load(file);
@@ -110,7 +108,15 @@ class BrowserClass{
         
     } */
 
-   
+//    New close browser method added
+   public static void closeBrowser(String key) {
+	   if (key.equalsIgnoreCase("y")) {
+		   System.out.println("You chose to close the browser.. Thank you!!!");
+		   driver.quit();
+		
+	}
+	
+}
 
 
 }
